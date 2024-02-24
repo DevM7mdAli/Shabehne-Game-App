@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'dart:math';
 
 void main() {
   runApp(MaterialApp(
@@ -7,13 +7,15 @@ void main() {
     home: Scaffold(
       backgroundColor: Colors.indigo,
       appBar: AppBar(
-        title: const Center(child:  Text("SHABEHNE | شبهني",
-                                          style: TextStyle(color: Colors.white),
+        title: const Center(
+          child: Text(
+            "SHABEHNE | شبهني",
+            style: TextStyle(color: Colors.white),
           ),
         ),
         backgroundColor: Colors.indigo[600],
       ),
-      body: ImagesPage(),
+      body: const ImagesPage(),
     ),
   ));
 }
@@ -26,59 +28,60 @@ class ImagesPage extends StatefulWidget {
 }
 
 class _ImagesPageState extends State<ImagesPage> {
-                  
-                  int x = 1 , y = 1;
-                  @override
-                  Widget build(BuildContext context){
+  int x = 1, y = 2;
 
-                    return Container(
-                      child:  Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          const Text("Try Again",
-                                style: TextStyle(
-                                  fontSize: 40,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
-                          ),
+  void randomNumber() {
+    x = Random().nextInt(8) + 1;
+    y = Random().nextInt(8) + 1;
+  }
 
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Expanded(
-                                flex: 1,
-                                child: TextButton(
-                                  onPressed: () {
-                                    setState(() {
-                                    if(x == 9){x = 1;}
-                                    else{x = x + 1; }
-                                    });
-                                  },
-                                  child: Image.asset("Images/image-$x.png", 
-                                                      width: 180,
-                                    ),
-                                ),
-                                ),
-
-
-                              Expanded(
-                                flex: 1,
-                                child: TextButton(
-                                  onPressed: () {
-                                    setState(() {
-                                    if(y == 9){y = 1;}
-                                    else{y = y + 1; }
-                                    });
-                                  },
-                                  child: Image.asset("Images/image-$y.png", 
-                                                      width: 180,
-                                    ),
-                                ),
-                                ),
-                          ],),
-                        ],
-                      ),
-                    );
-                  }
-                }
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Text(
+          x == y ? 'You Won' : "Try Again",
+          style: TextStyle(
+            fontSize: 40,
+            fontWeight: FontWeight.bold,
+            color: x == y ? Colors.white : Colors.red,
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Expanded(
+              flex: 1,
+              child: TextButton(
+                onPressed: () {
+                  setState(() {
+                    randomNumber();
+                  });
+                },
+                child: Image.asset(
+                  "Images/image-$x.png",
+                  width: 180,
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: TextButton(
+                onPressed: () {
+                  setState(() {
+                    randomNumber();
+                  });
+                },
+                child: Image.asset(
+                  "Images/image-$y.png",
+                  width: 180,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
